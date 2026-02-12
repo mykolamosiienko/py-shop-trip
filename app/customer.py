@@ -1,6 +1,9 @@
 from typing import List
+
+
 from app.car import Car
 from app.shop import Shop
+from app.path import fuel_price
 
 
 class Customer:
@@ -20,7 +23,7 @@ class Customer:
         self.car = car
 
     def ride(self, end_location: List[int]):
-        trip_cost = self.car.ride_cost(self.location, end_location)
+        trip_cost = self.car.ride_cost(self.location, end_location, fuel_price)
         return trip_cost
 
     def shopping(self, shop: Shop):

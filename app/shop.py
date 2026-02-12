@@ -7,7 +7,7 @@ class Shop:
         self.location = location
         self.products = products
 
-    def checkout(self, product_cart: dict):
+    def checkout(self, product_cart: dict) -> float:
         total = 0
         for product, quan in product_cart.items():
             if product in self.products:
