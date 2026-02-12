@@ -28,7 +28,6 @@ def shop_trip():
             )
         )
     for customer in customers_objects:
-        time_now = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         total = {}
         print(f"{customer.name} has {customer.money} dollars")
         for shop in shops_objects:
@@ -36,28 +35,27 @@ def shop_trip():
             shop_cost = customer.shopping(shop)
             total_sum = ride_cost + shop_cost
             total.update({shop: total_sum})
-            formatted = f"{(total_sum):.2f}".rstrip("0").rstrip(".")
-            print(f"{customer.name}'s trip to the {shop.name} costs {formatted}")
-        chipest_place = min(total.items(), key=lambda item: item[1])
-        chipest_shop_name = chipest_place[0]
-        if customer.money >= chipest_place[1]:
-            customer.move_to(chipest_shop_name.location)
-            customer.money -= chipest_place[1]
-            print(f"{customer.name} rides to {chipest_shop_name.name}\n")
+            print(f"{customer.name}'s trip to the {shop.name} costs {total_sum:.2f}")
+        cheapest_place = min(total.items(), key=lambda item: item[1])
+        cheapest_shop_name = cheapest_place[0]
+        if customer.money >= cheapest_place[1]:
+            customer.move_to(cheapest_shop_name.location)
+            customer.money -= cheapest_place[1]
+            print(f"{customer.name} rides to {cheapest_shop_name.name}\n")
+            time_now = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             print(f"Date: {time_now}")
             print(f"Thanks, {customer.name}, for your purchase!")
             print("You have bought:")
-            chipest_shop_cost = 0
+            cheapest_shop_cost = 0
             for name, quan in customer.product_cart.items():
-                price_per_item = chipest_shop_name.products[name]
-                chipest_shop_cost += quan * price_per_item
-                if quan > 1:
-                    name += "s"
+                price_per_item = cheapest_shop_name.products.get(name)
+                cheapest_shop_cost += quan * price_per_item
+                display_name = name + "s" if quan > 1 else name
                 print(
-                    f"{quan} {name} for {str(quan*price_per_item).rstrip("0").rstrip(".")} dollars"
+                    f"{quan} {display_name} for {str(quan*price_per_item).rstrip('0').rstrip('.')} dollars"
                 )
 
-            print(f"Total cost is {chipest_shop_cost} dollars")
+            print(f"Total cost is {cheapest_shop_cost} dollars")
             print("See you again!\n")
             print(f"{customer.name} rides home")
             customer.move_to(customer.base_location)

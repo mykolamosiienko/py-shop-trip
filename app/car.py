@@ -9,7 +9,7 @@ class Car:
         self.name = name
         self.fuel_consumption = fuel_consumption
 
-    def ride_cost(self, start_location: List[int], end_location: List[int]):
+    def ride_cost(self, start_location: List[int], end_location: List[int]) -> float:
         start_point = np.array(start_location)
         end_point = np.array(end_location)
         fuel_per_km = self.fuel_consumption / 100
@@ -18,5 +18,5 @@ class Car:
         price = fuel_per_ride * fuel_price
         return price
 
-    def move_to(self, location):
+    def move_to(self, location) -> None:
         self.location = location
